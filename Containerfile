@@ -10,7 +10,7 @@ ARG buildid
 
 # Set some image labels for identification
 LABEL image.name="MediaJunkie"
-LABEL image.release-status="early alpha"
+LABEL image.release-status="alpha"
 LABEL vendor.name="Dirk Gottschalk"
 LABEL vendor.email="dirk.gottschalk1980@googlemail.com"
 LABEL image.build-id="$buildid"
@@ -24,7 +24,7 @@ COPY etc /etc
 # NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi is
 #       fully supported out of the box.
 #
-# TODO: Fix this in the future
+# TODO: Address the GPU problem somehow
 RUN dnf -y group install lxde-desktop-environment sound-and-video --exclude=rootfiles && \
 	dnf install -y freeipa-client glibc-langpack-de kodi kodi-firewalld \
 	kodi-inputstream-adaptive kodi-inputstream-rtmp kodi-pvr-iptvsimple --exclude=rootfiles && \
@@ -34,6 +34,7 @@ RUN dnf -y group install lxde-desktop-environment sound-and-video --exclude=root
 	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" --exclude=rootfiles && \
 	dnf -y remove rpm-ostree && \
 	dnf clean all -y && \
-	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc}
+	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc} && \
+	systemctl disable mcelog.service
 
 # Let's lay back in our rocking chair whiile the magic does it's work
