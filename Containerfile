@@ -28,13 +28,14 @@ COPY etc /etc
 RUN dnf -y group install sound-and-video && \
 	dnf install -y lxdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
-	kodi-pvr-iptvsimple && \
+	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd && \
 	dnf -y install rpmfusion-free-release-tainted && \
 	dnf -y install libdvdcss  &&\
 	dnf -y install rpmfusion-nonfree-release-tainted && \
 	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" --skip-broken && \
 	dnf -y remove rpm-ostree flatpak && \
 	dnf clean all -y && \
-	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc}
+	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit} && \
+	systemctl enable cockpit
 
 # Let's lay back in our rocking chair whiile the magic does it's work
