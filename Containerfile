@@ -25,16 +25,16 @@ COPY etc /etc
 #       fully supported out of the box.
 #
 # TODO: Address the GPU problem somehow
-RUN dnf -y group install lxde-desktop-environment sound-and-video --exclude=rootfiles && \
-	dnf install -y freeipa-client glibc-langpack-de kodi kodi-firewalld \
-	kodi-inputstream-adaptive kodi-inputstream-rtmp kodi-pvr-iptvsimple --exclude=rootfiles && \
-	dnf -y install rpmfusion-free-release-tainted --exclude=rootfiles && \
-	dnf -y install libdvdcss --exclude=rootfiles && \
-	dnf -y install rpmfusion-nonfree-release-tainted --exclude=rootfiles && \
-	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" --exclude=rootfiles && \
-	dnf -y remove rpm-ostree && \
+RUN dnf -y group install sound-and-video && \
+	dnf install -y lxdm firewalld freeipa-client glibc-langpack-de kodi \
+	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
+	kodi-pvr-iptvsimple && \
+	dnf -y install rpmfusion-free-release-tainted && \
+	dnf -y install libdvdcss  &&\
+	dnf -y install rpmfusion-nonfree-release-tainted && \
+	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" --skip-broken && \
+	dnf -y remove rpm-ostree flatpak && \
 	dnf clean all -y && \
-	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc} && \
-	systemctl disable mcelog.service
+	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc}
 
 # Let's lay back in our rocking chair whiile the magic does it's work
