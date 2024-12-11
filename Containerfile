@@ -7,10 +7,9 @@ ARG GPUTYPE="generic"
 # Build ID to identify the generated image
 ARG buildid
 
-
 # Set some image labels for identification
 LABEL image.name="MediaJunkie"
-LABEL image.release-status="alpha"
+LABEL image.descr="A bootc based media player image"
 LABEL vendor.name="Dirk Gottschalk"
 LABEL vendor.email="dirk.gottschalk1980@googlemail.com"
 LABEL image.build-id="$buildid"
