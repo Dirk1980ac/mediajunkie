@@ -25,8 +25,8 @@ COPY etc /etc
 #       fully supported out of the box.
 #
 # TODO: Address the GPU problem somehow
-RUN dnf -y group install sound-and-video && \
-	dnf install -y lxdm firewalld freeipa-client glibc-langpack-de kodi \
+RUN dnf -y group install basic-desktop-environment sound-and-video && \
+	dnf install -y firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd && \
 	dnf -y install rpmfusion-free-release-tainted && \
