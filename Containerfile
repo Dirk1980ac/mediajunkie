@@ -27,7 +27,8 @@ COPY etc /etc
 RUN dnf -y group install basic-desktop-environment sound-and-video --exclude=rootfiles && \
 	dnf install -y firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
-	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd && \
+	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd greenboot watchdog \
+	greenboot-default-health-checks --exclude=rootfiles && \
 	dnf -y install rpmfusion-free-release-tainted --exclude=rootfiles && \
 	dnf -y install libdvdcss --exclude=rootfiles &&\
 	dnf -y install rpmfusion-nonfree-release-tainted --exclude=rootfiles && \
@@ -35,6 +36,9 @@ RUN dnf -y group install basic-desktop-environment sound-and-video --exclude=roo
 	dnf -y remove rpm-ostree flatpak && \
 	dnf clean all -y && \
 	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit,ssh} && \
-	systemctl enable cockpit.socket sshd
+	systemctl enable cockpit.socket sshd watchdog firstboot \
+	greenboot-task-runner greenboot-healthcheck greenboot-status \
+	greenboot-loading-message greenboot-grub2-set-counter greenboot-grub2-set-success \
+	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot redboot-task-runner
 
 # Let's lay back in our rocking chair whiile the magic does it's work
