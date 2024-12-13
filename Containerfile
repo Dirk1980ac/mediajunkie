@@ -1,4 +1,4 @@
-# We use the 'latest'  tag from fedora bootc which refers to the actual fedora release.
+# We use the 'latest' tag from fedora bootc which refers to the actual fedora release.
 FROM registry.fedoraproject.org/fedora-bootc:latest
 
 # Will later be used te generate GPU specific images
@@ -34,7 +34,7 @@ RUN dnf -y group install basic-desktop-environment sound-and-video --exclude=roo
 	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" --skip-broken --exclude=rootfiles && \
 	dnf -y remove rpm-ostree flatpak && \
 	dnf clean all -y && \
-	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit} && \
-	systemctl enable cockpit.socket
+	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit,ssh} && \
+	systemctl enable cockpit.socket sshd
 
 # Let's lay back in our rocking chair whiile the magic does it's work
