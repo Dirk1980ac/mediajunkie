@@ -1,0 +1,147 @@
+﻿# Kodi Media Center language file
+# Addon Name: TELE 5 Mediathek
+# Addon id: plugin.video.tele5_de
+# Addon Provider: w4ki
+msgid ""
+msgstr ""
+"Language-Team: GERMAN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Allgemein"
+
+msgctxt "#30001"
+msgid "Advanced"
+msgstr "Fortgeschritten"
+
+# empty strings from id 30002 to 30100
+# SETTINGS-BUTTONS
+
+msgctxt "#30101"
+msgid "[B][COLOR yellow]STOP[/COLOR][/B] playback at the end of the video [B][COLOR yellow]force[/COLOR][/B] (otherwise Provider control)"
+msgstr "[B][COLOR yellow]STOP[/COLOR][/B] der Wiedergabe bei Video-Ende [B][COLOR yellow]erzwingen[/COLOR][/B] (sonst Providersteuerung)"
+
+msgctxt "#30102"
+msgid "Show remaining online time"
+msgstr "Verbleibende Online-Zeit anzeigen"
+
+msgctxt "#30103"
+msgid "[B][COLOR lime]Remaining time[/COLOR][/B]"
+msgstr "[B][COLOR lime]Verbleibende Zeit[/COLOR][/B]"
+
+msgctxt "#30104"
+msgid "[B][COLOR lime]End date[/COLOR][/B]"
+msgstr "[B][COLOR lime]Enddatum[/COLOR][/B]"
+
+msgctxt "#30105"
+msgid "[B][COLOR orange]Switched off[/COLOR][/B]"
+msgstr "[B][COLOR orange]Ausgeschaltet[/COLOR][/B]"
+
+msgctxt "#30106"
+msgid "Use Thumb as Background-Fanart"
+msgstr "Thumb als Hintergrund-Fanart nutzen"
+
+msgctxt "#30107"
+msgid "Show Addon-Settings in main menu"
+msgstr "Addon-Einstellungen im Hauptmenü anzeigen"
+
+msgctxt "#30108"
+msgid "Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr "Addon-Debug mit Details (sonst nur Minimal-Log)"
+
+# empty strings from id 30109 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]PLAYBACK-STOP[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]WIEDERGABE-STOP[/COLOR][/B]"
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]TIME REMAINING[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]RESTZEIT[/COLOR][/B]"
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]EINSTELLUNGEN[/COLOR][/B]"
+
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+
+# empty strings from id 30235 to 30350
+# SETTINGS-DESCRIPTIONS
+
+msgctxt "#30351"
+msgid "[COLOR yellow]Often the VoD-Streams are not stopped at the end of the specified runtime ![/COLOR][CR][COLOR chartreuse]To avoid this in principle '[B]STOP playback force[/B] switch on.[/COLOR][CR][B][COLOR orangered]Attention: Proper functioning is guaranteed when using any function of the player or seek run up to max. 2 minutes before the end of the running time...[/COLOR][/B]"
+msgstr "[COLOR yellow]Häufig werden die VoD-Streams nicht am Ende der vorgegebenen Laufzeit gestoppt ![/COLOR][CR][COLOR chartreuse]Um dieses grundsätzlich zu vermeiden '[B]STOP der Wiedergabe erzwingen[/B]' einschalten.[/COLOR][CR][B][COLOR orangered]Achtung: Die einwandfreie Funktion ist bei Nutzung jeder Funktion des Players bzw. Suchlauf bis max. 2 Minuten vor Laufzeitende gewährleistet...[/COLOR][/B]"
+
+# empty strings from id 30352 to 32200
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#32201"
+msgid "Livestream"
+msgstr "Livestream"
+
+msgctxt "#32202"
+msgid "Watch TELE 5 live"
+msgstr "TELE 5 live schauen"
+
+msgctxt "#32203"
+msgid "Movies"
+msgstr "Filme"
+
+msgctxt "#32204"
+msgid "Series"
+msgstr "Serien"
+
+msgctxt "#32205"
+msgid "In-house productions"
+msgstr "Eigenproduktionen"
+
+msgctxt "#32206"
+msgid "Settings"
+msgstr "Einstellungen"
+
+# empty strings from id 30207 to 30220
+
+msgctxt "#32221"
+msgid "[B][COLOR gold]Online until {}[/COLOR][/B]"
+msgstr "[B][COLOR gold]Online bis {}[/COLOR][/B]"
+
+msgctxt "#32222"
+msgid "[B][COLOR gold]{} Second(s) left online[/COLOR][/B]"
+msgstr "[B][COLOR gold]Noch {} Sekunde(n) online[/COLOR][/B]"
+
+msgctxt "#32223"
+msgid "[B][COLOR gold]{} Minute(s) left online[/COLOR][/B]"
+msgstr "[B][COLOR gold]Noch {} Minute(n) online[/COLOR][/B]"
+
+msgctxt "#32224"
+msgid "[B][COLOR gold]{} Hour(s) left online[/COLOR][/B]"
+msgstr "[B][COLOR gold]Noch {} Stunde(n) online[/COLOR][/B]"
+
+msgctxt "#32225"
+msgid "[B][COLOR gold]{} Day(s) left online[/COLOR][/B]"
+msgstr "[B][COLOR gold]Noch {} Tag(e) online[/COLOR][/B]"
+
+# empty strings from id 30226 to 30240
+
+msgctxt "#32241"
+msgid "[B][COLOR orangered]Playback failed ![/COLOR][/B]"
+msgstr "[B][COLOR orangered]Wiedergabe fehlgeschlagen ![/COLOR][/B]"
+
+msgctxt "#32242"
+msgid "See log file for more information"
+msgstr "Siehe Logdatei für mehr Informationen"

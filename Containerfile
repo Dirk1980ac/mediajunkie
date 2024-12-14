@@ -41,5 +41,4 @@ RUN dnf -y group install basic-desktop-environment sound-and-video --exclude=roo
 	greenboot-loading-message greenboot-grub2-set-counter greenboot-grub2-set-success \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot redboot-task-runner
 
-
 # Let's lay back in our rocking chair whiile the magic does it's work
