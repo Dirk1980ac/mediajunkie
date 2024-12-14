@@ -24,21 +24,22 @@ COPY etc /etc
 #       fully supported out of the box.
 #
 # TODO: Address the GPU problem somehow
+# NOTE: DNF complains about already existing files for package 'rootfiles' and
+#       fails with an error. So we just exlude this package.
 RUN dnf -y group install basic-desktop-environment sound-and-video --exclude=rootfiles && \
 	dnf install -y firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
-	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd greenboot watchdog \
-	greenboot-default-health-checks --exclude=rootfiles && \
-	dnf -y install rpmfusion-free-release-tainted --exclude=rootfiles && \
-	dnf -y install libdvdcss --exclude=rootfiles &&\
-	dnf -y install rpmfusion-nonfree-release-tainted --exclude=rootfiles && \
-	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" --skip-broken --exclude=rootfiles && \
-	dnf -y remove rpm-ostree flatpak && \
+	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog \
+	greenboot greenboot-default-health-checks && \
+	dnf -y install rpmfusion-free-release-tainted && \
+	dnf -y install libdvdcss &&\
+	dnf -y install rpmfusion-nonfree-release-tainted && \
+	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" && \
 	dnf clean all -y && \
 	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit,ssh} && \
-	systemctl enable cockpit.socket sshd watchdog firstboot \
-	greenboot-task-runner greenboot-healthcheck greenboot-status \
+	systemctl enable cockpit.socket sshd watchdog greenboot-task-runner greenboot-healthcheck greenboot-status \
 	greenboot-loading-message greenboot-grub2-set-counter greenboot-grub2-set-success \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot redboot-task-runner
+
 
 # Let's lay back in our rocking chair whiile the magic does it's work

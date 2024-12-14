@@ -8,3 +8,4 @@ This builds a ready to go media player system based upon Fedora Linux.
 * Uses Kodi as media player
 * Running SSHD so files and configurations can be copied using SSH
 * Auto-Login user and session can be configured
+* The Cockpit Web
