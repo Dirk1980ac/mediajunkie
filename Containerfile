@@ -20,17 +20,17 @@ COPY etc /etc
 # install the software we want to have, set the firewall and install some additional
 # RPMFusion packages.
 #
+# TODO: Address the GPU problem somehow
+#
 # NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi is
 #       fully supported out of the box.
-#
-# TODO: Address the GPU problem somehow
-# NOTE: DNF complains about already existing files for package 'rootfiles' and
-#       fails with an error. So we just exlude this package.
+#       DNF complains about already existing files for package 'rootfiles' and
+#       fails with an error. So we just exlude this package for now.
 RUN dnf -y group install basic-desktop-environment sound-and-video --exclude=rootfiles && \
 	dnf install -y firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog \
-	greenboot greenboot-default-health-checks && \
+	greenboot greenboot-default-health-checks fedora-remix-logos && \
 	dnf -y install rpmfusion-free-release-tainted && \
 	dnf -y install libdvdcss &&\
 	dnf -y install rpmfusion-nonfree-release-tainted && \
