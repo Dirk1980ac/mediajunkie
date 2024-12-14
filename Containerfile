@@ -12,7 +12,7 @@ LABEL image.name="MediaJunkie"
 LABEL image.descr="A bootc based media player image"
 LABEL vendor.name="Dirk Gottschalk"
 LABEL vendor.email="dirk.gottschalk1980@googlemail.com"
-LABEL image.build-id="$buildid"
+LABEL image.build-id=$buildid
 
 # Copy the prepared stuff we need into the image
 COPY etc /etc
