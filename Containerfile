@@ -26,8 +26,7 @@ COPY etc /etc
 #       fully supported out of the box.
 #       DNF complains about already existing files for package 'rootfiles' and
 #       fails with an error. So we just exlude this package for now.
-RUN dnf -y group install basic-desktop-environment sound-and-video --exclude=rootfiles && \
-	dnf install -y firewalld freeipa-client glibc-langpack-de kodi \
+RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog \
 	greenboot greenboot-default-health-checks fedora-remix-logos && \
