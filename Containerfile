@@ -35,6 +35,7 @@ RUN dnf -y group install basic-desktop-environment sound-and-video --exclude=roo
 	dnf -y install libdvdcss &&\
 	dnf -y install rpmfusion-nonfree-release-tainted && \
 	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" && \
+	dnf remove -y flatpak && \
 	dnf clean all -y && \
 	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit,ssh} && \
 	systemctl enable cockpit.socket sshd watchdog greenboot-task-runner greenboot-healthcheck greenboot-status \
