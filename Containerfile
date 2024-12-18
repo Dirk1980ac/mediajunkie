@@ -29,16 +29,16 @@ COPY etc /etc
 RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog \
-	greenboot greenboot-default-health-checks fedora-remix-logos && \
-	dnf -y install rpmfusion-free-release-tainted && \
+	greenboot greenboot-default-health-checks fedora-remix-logos \
+	usbutils --setopt="install_weak_deps=False" && \
+	dnf -y install rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted && \
 	dnf -y install libdvdcss &&\
-	dnf -y install rpmfusion-nonfree-release-tainted && \
 	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" && \
-	dnf remove -y flatpak && \
 	dnf clean all -y && \
 	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit,ssh} && \
-	systemctl enable cockpit.socket sshd watchdog greenboot-task-runner greenboot-healthcheck greenboot-status \
-	greenboot-loading-message greenboot-grub2-set-counter greenboot-grub2-set-success \
-	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot redboot-task-runner
+	systemctl enable cockpit.socket sshd watchdog greenboot-task-runner greenboot-healthcheck \
+	greenboot-status greenboot-loading-message greenboot-grub2-set-counter \
+	greenboot-grub2-set-success greenboot-rpm-ostree-grub2-check-fallback \
+	redboot-auto-reboot redboot-task-runner
 
 # Let's lay back in our rocking chair whiile the magic does it's work
