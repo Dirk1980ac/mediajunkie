@@ -22,8 +22,8 @@ COPY etc /etc
 #
 # TODO: Address the GPU problem somehow
 #
-# NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi is
-#       fully supported out of the box.
+# NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi
+#		is fully supported out of the box.
 #       DNF complains about already existing files for package 'rootfiles' and
 #       fails with an error. So we just exlude this package for now.
 RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
@@ -31,14 +31,16 @@ RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog \
 	greenboot greenboot-default-health-checks fedora-remix-logos \
 	usbutils --setopt="install_weak_deps=False" && \
-	dnf -y install rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted && \
+	dnf -y install rpmfusion-free-release-tainted \
+	rpmfusion-nonfree-release-tainted && \
 	dnf -y install libdvdcss &&\
 	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" && \
 	dnf clean all -y && \
 	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit,ssh} && \
-	systemctl enable cockpit.socket sshd watchdog greenboot-task-runner greenboot-healthcheck \
-	greenboot-status greenboot-loading-message greenboot-grub2-set-counter \
-	greenboot-grub2-set-success greenboot-rpm-ostree-grub2-check-fallback \
-	redboot-auto-reboot redboot-task-runner
+	systemctl enable cockpit.socket sshd watchdog greenboot-task-runner \
+	greenboot-healthcheck greenboot-status greenboot-loading-message \
+	greenboot-grub2-set-counter greenboot-grub2-set-success \
+	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot \
+	redboot-task-runner
 
 # Let's lay back in our rocking chair whiile the magic does it's work
