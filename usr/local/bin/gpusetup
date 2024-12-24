@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+	echo "usage: gpusetuo <GPUTYPE>"
+	echo ""
+	echo "Possible GPU types: amd, intel"
+elif [ "$1" == "amd" ]; then
+	dnf swap mesa-va-drivers mesa-va-drivers-freeworld
+	dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
+elif [ "$1" == "intel" ]; then
+	sudo dnf install intel-media-driver
+fi

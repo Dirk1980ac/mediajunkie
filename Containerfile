@@ -16,9 +16,10 @@ LABEL image.build-id=$buildid
 
 # Copy the prepared stuff we need into the image
 COPY etc /etc
+COPY usr /usr
 
-# install the software we want to have, set the firewall and install some additional
-# RPMFusion packages.
+# install the software we want to have, set the firewall and install some
+# additional RPMFusion packages.
 #
 # TODO: Address the GPU problem somehow
 #
@@ -35,12 +36,14 @@ RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	rpmfusion-nonfree-release-tainted && \
 	dnf -y install libdvdcss &&\
 	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" && \
+	dnf -y swap ffmpeg-free ffmpeg --allowerasing && \
 	dnf clean all -y && \
 	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit,ssh} && \
 	systemctl enable cockpit.socket sshd watchdog greenboot-task-runner \
 	greenboot-healthcheck greenboot-status greenboot-loading-message \
 	greenboot-grub2-set-counter greenboot-grub2-set-success \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot \
-	redboot-task-runner
+	redboot-task-runner && \
+	gpusetup $GPUTYPE
 
 # Let's lay back in our rocking chair whiile the magic does it's work
