@@ -24,7 +24,7 @@ COPY usr /usr
 # TODO: Address the GPU problem somehow
 #
 # NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi
-#	is fully supported out of the box.
+#		is fully supported out of the box.
 RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog \
@@ -42,6 +42,7 @@ RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	greenboot-grub2-set-counter greenboot-grub2-set-success \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot \
 	redboot-task-runner && \
-	gpusetup $GPUTYPE
+	gpusetup $GPUTYPE && \
+	rm -f /usr/lib/gpusetup
 
 # Let's lay back in our rocking chair whiile the magic does it's work
