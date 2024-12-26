@@ -1,2 +1,1 @@
-* linguist-detectable=false
-Containerfile linguist-detectable=true
+etc/* linguist-detectable=false
