@@ -1,6 +1,4 @@
-# MediaJunkie -  a bootc media player image based on Fedoraa Linux
-
-This builds a ready to go media player system based upon Fedora Linux.
+# MediaJunkie -  a bootc media player image based on Fedora Linux
 
 ## Features
 
