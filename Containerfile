@@ -27,9 +27,9 @@ COPY usr /usr
 #		is fully supported out of the box.
 RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
-	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog \
-	greenboot greenboot-default-health-checks fedora-remix-logos \
-	usbutils --setopt="install_weak_deps=False" && \
+	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog greenboot \
+	greenboot-default-health-checks fedora-remix-logos mc usbutils \
+	--setopt="install_weak_deps=False" && \
 	dnf -y install rpmfusion-free-release-tainted \
 	rpmfusion-nonfree-release-tainted && \
 	dnf -y install libdvdcss &&\
@@ -43,6 +43,6 @@ RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot \
 	redboot-task-runner && \
 	gpusetup $GPUTYPE && \
-	rm -f /usr/lib/gpusetup
+	rm -f /usr/local/bin/gpusetup
 
 # Let's lay back in our rocking chair whiile the magic does it's work
