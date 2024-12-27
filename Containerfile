@@ -44,7 +44,7 @@ RUN echo "$buildid" >/etc/img-build-id && \
 	greenboot-grub2-set-counter greenboot-grub2-set-success \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot \
 	redboot-task-runner systemd-zram-setup@zram0.service && \
-	gpusetup $GPUTYPE && \
+	/usr/local/bin/gpusetup $GPUTYPE && \
 	rm -f /usr/local/bin/gpusetup
 
 # Let's lay back in our rocking chair whiile the magic does it's work
