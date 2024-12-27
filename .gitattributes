@@ -1,2 +1,1 @@
-* linguist-detectable=false
-Containerfile linguist-detectable=false
+*.py linguist-detectable=false
