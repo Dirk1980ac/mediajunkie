@@ -25,7 +25,8 @@ COPY usr /usr
 #
 # NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi
 #		is fully supported out of the box.
-RUN dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
+RUN echo "$builid" >/etc/img-build-id && \
+	dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog greenboot \
 	greenboot-default-health-checks fedora-remix-logos mc usbutils \

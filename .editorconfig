@@ -1,6 +1,8 @@
 root = true
 
 [*.md]
+indent_size = 4
+indent_style = tab
 trim_trailing_whitespace = false
 
 [Makefile]
@@ -9,18 +11,6 @@ indent_style = tab
 [*.[ch]]
 indent_style = tab
 indent_size = 8
-trim_trailing_whitespace = true
-
-[*.sym]
-indent_style = tab
-indent_size = 4
-trim_trailing_whitespace = true
-
-[*.sh]
-indent_style = tab
-indent_size = 4
-trim_trailing_whitespace = true
-end_of_line = lf
 
 [*]
 indent_style = tab
@@ -28,4 +18,3 @@ indent_size = 4
 end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
-insert_final_newline = true
