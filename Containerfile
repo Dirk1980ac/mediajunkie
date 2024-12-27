@@ -25,11 +25,12 @@ COPY usr /usr
 #
 # NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi
 #		is fully supported out of the box.
-RUN echo "$builid" >/etc/img-build-id && \
+RUN echo "$buildid" >/etc/img-build-id && \
 	dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple cockpit cockpit-storaged realmd watchdog greenboot \
 	greenboot-default-health-checks fedora-remix-logos mc usbutils \
+	zram-generator zram-generator-defaults \
 	--setopt="install_weak_deps=False" && \
 	dnf -y install rpmfusion-free-release-tainted \
 	rpmfusion-nonfree-release-tainted && \
@@ -42,7 +43,7 @@ RUN echo "$builid" >/etc/img-build-id && \
 	greenboot-healthcheck greenboot-status greenboot-loading-message \
 	greenboot-grub2-set-counter greenboot-grub2-set-success \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot \
-	redboot-task-runner && \
+	redboot-task-runner zram-generator && \
 	gpusetup $GPUTYPE && \
 	rm -f /usr/local/bin/gpusetup
 
