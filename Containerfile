@@ -1,4 +1,4 @@
-# We use the 'latest' tag from fedora bootc which refers to the actual fedora release.
+# Use the 'latest' tag from fedora-bootc.
 FROM registry.fedoraproject.org/fedora-bootc:latest
 
 # Will later be used te generate GPU specific images
@@ -21,7 +21,7 @@ COPY usr /usr
 # install the software we want to have, set the firewall and install some
 # additional RPMFusion packages.
 #
-# TODO: Address the GPU problem somehow
+# TODO: Address the GPU problem somehow.
 #
 # NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi
 #		is fully supported out of the box.
@@ -38,7 +38,7 @@ RUN echo "$buildid" >/etc/img-build-id && \
 	dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware" && \
 	dnf -y swap ffmpeg-free ffmpeg --allowerasing && \
 	dnf clean all -y && \
-	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit,ssh} && \
+	firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit} && \
 	systemctl enable cockpit.socket sshd watchdog greenboot-task-runner \
 	greenboot-healthcheck greenboot-status greenboot-loading-message \
 	greenboot-grub2-set-counter greenboot-grub2-set-success \
