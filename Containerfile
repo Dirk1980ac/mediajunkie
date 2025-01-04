@@ -24,7 +24,7 @@ COPY etc /etc
 #
 # NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi
 #		is fully supported out of the box.
-RUN --mount=type=bind,source=./install,target=/install <<EOF
+RUN <<EOF
 echo "$buildid" >/etc/img-build-id
 dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
 	kodi-firewalld 	kodi-inputstream-adaptive kodi-inputstream-rtmp \
@@ -37,6 +37,12 @@ dnf -y install rpmfusion-free-release-tainted \
 dnf -y install libdvdcss
 dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware"
 dnf -y swap ffmpeg-free ffmpeg --allowerasing
+if [ $GPUTYPE == "amd" ]; then
+	dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
+	dnf -y swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
+elif [ $GPUTYPE == "intel" ]; then
+	dnf -y install intel-media-driver
+fi
 dnf clean all -y
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit} && \
 systemctl enable cockpit.socket sshd watchdog greenboot-task-runner \
@@ -44,7 +50,6 @@ systemctl enable cockpit.socket sshd watchdog greenboot-task-runner \
 	greenboot-grub2-set-counter greenboot-grub2-set-success \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot \
 	redboot-task-runner systemd-zram-setup@zram0.service
-bash /install/gpusetup $GPUTYPE
 EOF
 
 # Let's lay back in our rocking chair whiile the magic does it's work
