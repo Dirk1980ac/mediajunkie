@@ -52,4 +52,4 @@ systemctl enable cockpit.socket sshd watchdog greenboot-task-runner \
 	redboot-task-runner systemd-zram-setup@zram0.service
 EOF
 
-# Let's lay back in our rocking chair whiile the magic does it's work
+# Let's lay back in our rocking chair while the magic does it's work
