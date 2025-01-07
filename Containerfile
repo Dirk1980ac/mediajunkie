@@ -2,7 +2,7 @@
 FROM registry.fedoraproject.org/fedora-bootc:latest
 
 # Will later be used te generate GPU specific images
-ARG GPUTYPE="generic"
+ARG gputype="generic"
 
 # Build ID to identify the generated image
 ARG buildid
@@ -17,13 +17,13 @@ LABEL image.build-id=$buildid
 # Copy the prepared stuff we need into the image
 COPY etc /etc
 
-# install the software we want to have, set the firewall and install some
+# Install the software we want to have, set the firewall and install some
 # additional RPMFusion packages.
 #
-# TODO: Address the GPU problem somehow.
+# NOTE: You have to add --build-arg gputype=amd or --build-arg gputype=amd du
+#       create images with (proprietary) drivers for Intel or AMD GPUs.
+#       NVIDIA is currently not supported, yet.
 #
-# NOTE: This does not install gpu specific drivers at the moment. Raspberry Pi
-#		is fully supported out of the box.
 RUN <<EOF
 echo "$buildid" >/etc/img-build-id
 dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
@@ -37,10 +37,10 @@ dnf -y install rpmfusion-free-release-tainted \
 dnf -y install libdvdcss
 dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware"
 dnf -y swap ffmpeg-free ffmpeg --allowerasing
-if [ $GPUTYPE == "amd" ]; then
+if [ $gputype == "amd" ]; then
 	dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
 	dnf -y swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
-elif [ $GPUTYPE == "intel" ]; then
+elif [ $gputype == "intel" ]; then
 	dnf -y install intel-media-driver
 fi
 dnf clean all -y
