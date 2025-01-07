@@ -20,10 +20,13 @@ COPY etc /etc
 # Install the software we want to have, set the firewall and install some
 # additional RPMFusion packages.
 #
-# NOTE: You have to add --build-arg gputype=amd or --build-arg gputype=amd du
-#       create images with (proprietary) drivers for Intel or AMD GPUs.
-#       NVIDIA is currently not supported, yet.
+# NOTE: To create images with (proprietary) GPU drivers you have to add:
+#               --build-arg gputype=amd        (For AMD)
+#               --build-arg gputype=intel      (for Intel)
 #
+# NOTE: Support for NVidia with proprietary drivers will follow later.
+#
+
 RUN <<EOF
 echo "$buildid" >/etc/img-build-id
 dnf install -y lightdm firewalld freeipa-client glibc-langpack-de kodi \
