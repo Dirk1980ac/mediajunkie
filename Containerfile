@@ -8,10 +8,9 @@ ARG gputype="generic"
 ARG buildid
 
 # Set some image labels for identification
-LABEL image.name="MediaJunkie"
-LABEL image.descr="A bootc based media player image"
-LABEL vendor.name="Dirk Gottschalk"
-LABEL vendor.email="dirk.gottschalk1980@googlemail.com"
+LABEL org.opencontainers.image.name="MediaJunkie"
+LABEL org.opencontainers.image.desciptionr="A bootc based media player image"
+LABEL org.opencontainers.image.authors="Dirk Gottschalk"
 LABEL image.build-id=$buildid
 
 # Copy the prepared stuff we need into the image
