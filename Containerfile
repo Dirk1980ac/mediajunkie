@@ -46,7 +46,7 @@ systemctl enable cockpit.socket sshd watchdog greenboot-task-runner \
 	greenboot-rpm-ostree-grub2-check-fallback redboot-auto-reboot \
 	redboot-task-runner systemd-zram-setup@zram0.service
 
-if [ $? -eq 0 ]
+if [ $? -eq 0 ]; then
 	if [ "$gputype" == "amd" ]; then
 		dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
 		dnf -y swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
