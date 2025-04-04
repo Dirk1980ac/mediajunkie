@@ -28,7 +28,8 @@ COPY etc /etc
 RUN <<'EOF'
 set -eu
 
-echo "$buildid" >/usr/bootc-image/build.id
+mkdir -p /usr/bootc-image
+echo $buildid > /usr/bootc-image/build.id
 
 dnf -y install --setopt="install_weak_deps=False" \
 	lightdm \
