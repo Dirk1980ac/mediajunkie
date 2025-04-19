@@ -1,5 +1,5 @@
 # Use the 'latest' tag from fedora-bootc.
-FROM registry.fedoraproject.org/fedora-bootc:latest
+FROM registry.fedoraproject.org/fedora-bootc:42
 
 # Will later be used te generate GPU specific images
 # Will later be used to generate GPU specific images
@@ -30,6 +30,10 @@ set -eu
 
 mkdir -p /usr/bootc-image
 echo $buildid > /usr/bootc-image/build.id
+
+dnf -y install \
+	https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+	https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 dnf -y install --setopt="install_weak_deps=False" \
 	lightdm \
