@@ -6,7 +6,7 @@ FROM registry.fedoraproject.org/fedora-bootc:42
 ARG gputype="generic"
 
 # Build ID to identify the generated image
-ARG buildid
+ARG buildid="unset"
 
 # Set some image labels for identification
 LABEL org.opencontainers.image.name="MediaJunkie"
