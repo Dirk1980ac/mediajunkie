@@ -29,7 +29,7 @@ RUN <<'EOF'
 set -eu
 
 mkdir -p /usr/bootc-image
-echo $buildid > /usr/bootc-image/build.id
+echo $buildid > /usr/bootc-image/build-id
 
 dnf -y install \
 	https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
