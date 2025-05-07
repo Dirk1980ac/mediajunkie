@@ -1,0 +1,13 @@
+[Unit]
+Description=Update while booting.
+Documentation=man:bootc(8)
+ConditionPathExists=/run/ostree-booted
+After=network-online.target
+Before=device-init.service systemd-user-sessions.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bootc update --apply --quiet
+
+[Install]
+WantedBy=multi-user.target

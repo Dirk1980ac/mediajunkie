@@ -85,7 +85,8 @@ systemctl enable \
 	greenboot-rpm-ostree-grub2-check-fallback \
 	redboot-auto-reboot \
 	redboot-task-runner \
-	systemd-zram-setup@zram0.service
+	systemd-zram-setup@zram0.service \
+	boot-update
 
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
 
