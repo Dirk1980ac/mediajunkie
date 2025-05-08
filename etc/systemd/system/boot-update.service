@@ -2,7 +2,8 @@
 Description=Update BootC Container on Boot
 Documentation=https://systemd.io/
 DefaultDependencies=no
-Before=local-fs.target umount.target final.target shutdown.target reboot.target halt.target
+Wants=network-online.target
+Before=shutdown.target reboot.target halt.target multi-user.target
 
 [Service]
 Type=oneshot
