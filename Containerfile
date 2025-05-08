@@ -10,7 +10,6 @@ LABEL org.opencontainers.image.build-id="$buildid"
 LABEL org.opencontainers.image.authors="Dirk Gottschalk"
 LABEL org.opencontainers.image.name="MediaJunkie"
 LABEL org.opencontainers.image.desciptionr="A bootc based media player image"
-LABEL org.opencontainers.image.description="A bootc based media player image"
 
 # Install the software we want to have.
 #
