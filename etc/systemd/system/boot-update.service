@@ -1,7 +1,5 @@
 [Unit]
 Description=Update BootC Container on Boot
-Documentation=https://systemd.io/
-DefaultDependencies=no
 Wants=network-online.target
 After=systemd-remount-fs.service
 Before=shutdown.target reboot.target halt.target multi-user.target
