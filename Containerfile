@@ -12,24 +12,17 @@ LABEL org.opencontainers.image.name="MediaJunkie"
 LABEL org.opencontainers.image.desciptionr="A bootc based media player image"
 LABEL org.opencontainers.image.description="A bootc based media player image"
 
-# Copy the prepared stuff we need into the image
-COPY etc /etc
-
-# Install the software we want to have, set the firewall and install some
-# additional RPMFusion packages.
+# Install the software we want to have.
 #
 # NOTE: To create images with (proprietary) GPU drivers you have to add:
 #               --build-arg gputype=amd        (For AMD)
 #               --build-arg gputype=intel      (for Intel)
-RUN <<'EOF'
-set -eu
-
-mkdir -p /usr/bootc-image
-echo $buildid > /usr/bootc-image/build-id
-
+RUN <<END_OF_BLOCK
 dnf -y install \
 	https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
 	https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware"
 
 dnf -y install --setopt="install_weak_deps=False" \
 	lightdm \
@@ -49,14 +42,12 @@ dnf -y install --setopt="install_weak_deps=False" \
 	greenboot-default-health-checks \
 	fedora-remix-logos \
 	mc \
+	libdvdcss \
 	usbutils \
 	zram-generator \
 	zram-generator-defaults \
 	rpmfusion-free-release-tainted \
 	rpmfusion-nonfree-release-tainted
-
-dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware"
-dnf -y install libdvdcss
 
 if [ "$gputype" == "amd" ]; then
 	dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
@@ -71,6 +62,20 @@ else
 fi
 
 dnf clean all -y
+END_OF_BLOCK
+
+# Copy the prepared stuff we need into the image
+COPY etc /etc
+
+# Make changes to the systen and set the image build-id.
+#
+# NOTE: This is now decoupled frim sodtware installation to reduce the size of
+#       the download in cases where just config changes were made in the build.
+RUN <<END_OF_BLOCK
+set -eu
+
+mkdir -p /usr/bootc-image
+echo $buildid > /usr/bootc-image/build-id
 
 systemctl enable \
 	cockpit.socket \
@@ -90,4 +95,4 @@ systemctl enable \
 
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
 
-EOF
+END_OF_BLOCK
