@@ -21,6 +21,10 @@ dnf -y install \
 	https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
 	https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+dnf -y install \
+	rpmfusion-free-release-tainted \
+	rpmfusion-nonfree-release-tainted
+
 dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware"
 
 dnf -y install --setopt="install_weak_deps=False" \
@@ -45,8 +49,6 @@ dnf -y install --setopt="install_weak_deps=False" \
 	usbutils \
 	zram-generator \
 	zram-generator-defaults \
-	rpmfusion-free-release-tainted \
-	rpmfusion-nonfree-release-tainted
 
 if [ "$gputype" == "amd" ]; then
 	dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
