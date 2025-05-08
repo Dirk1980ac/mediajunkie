@@ -97,3 +97,5 @@ systemctl enable \
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
 
 END_OF_BLOCK
+
+RUN bootc container lint
