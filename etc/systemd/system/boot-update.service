@@ -1,11 +1,13 @@
 [Unit]
-Description=Update on boot.
-After=network-online.target
-Before=multi-user.target reboot.target default.target
+Description=Update BootC Container on Boot
+Documentation=https://systemd.io/
+DefaultDependencies=no
+Before=local-fs.target umount.target final.target shutdown.target reboot.target halt.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bootc update --apply --quiet
+ExecStart=/usr/bin/bootc update --apply
+RemainAfterExit=true
 
 [Install]
-WantedBy=multi-user.target default.target
+WantedBy=multi-user.target
