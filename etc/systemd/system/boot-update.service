@@ -2,11 +2,12 @@
 Description=Update BootC Container on Boot
 Wants=network-online.target
 After=systemd-remount-fs.service
+ConditionPathExists=/run/ostree-booted
 Before=shutdown.target reboot.target halt.target multi-user.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bootc update --apply
+ExecStart=/usr/bin/bootc update --apply --quiet
 RemainAfterExit=true
 
 [Install]
