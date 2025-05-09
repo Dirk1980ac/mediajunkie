@@ -1,9 +1,8 @@
 [Unit]
 Description=Update BootC Container on Boot
 Wants=network-online.target
-After=systemd-remount-fs.service
 ConditionPathExists=/run/ostree-booted
-Before=shutdown.target reboot.target halt.target multi-user.target
+Before=shutdown.target reboot.target halt.target
 
 [Service]
 Type=oneshot
