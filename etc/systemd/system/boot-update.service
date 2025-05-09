@@ -2,7 +2,6 @@
 Description=Update BootC Container on Boot
 Wants=network-online.target
 ConditionPathExists=/run/ostree-booted
-Before=shutdown.target reboot.target halt.target
 
 [Service]
 Type=oneshot
