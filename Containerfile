@@ -82,10 +82,10 @@ systemctl enable \
 	greenboot-grub2-set-counter \
 	greenboot-grub2-set-success \
 	greenboot-rpm-ostree-grub2-check-fallback \
+	bootc-fetch-apply-updates.timer \
 	redboot-auto-reboot \
 	redboot-task-runner \
-	systemd-zram-setup@zram0.service \
-	boot-update
+	systemd-zram-setup@zram0.service
 
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
 
