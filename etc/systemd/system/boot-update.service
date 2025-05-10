@@ -1,6 +1,7 @@
 [Unit]
 Description=Update BootC Container on Boot
 Wants=network-online.target
+After=sshd.service
 ConditionPathExists=/run/ostree-booted
 
 [Service]
