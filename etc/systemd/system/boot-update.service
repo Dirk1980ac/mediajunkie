@@ -6,7 +6,7 @@ ConditionPathExists=/run/ostree-booted
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bootc update --apply --quiet
+ExecStart=/usr/bin/bootc update --quiet
 RemainAfterExit=true
 
 [Install]
