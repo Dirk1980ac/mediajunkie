@@ -54,8 +54,9 @@ dnf -y --setopt="install_weak_deps=False" install \
 	libdvdcss \
 	usbutils \
 	zram-generator \
-	zram-generator-defaults \
-	*-firmware
+	zram-generator-defaults
+
+dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware"
 
 if [ "$gputype" == "amd" ]; then
 	dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
