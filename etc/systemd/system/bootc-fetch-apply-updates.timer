@@ -4,7 +4,7 @@ Documentation=man:bootc(8)
 ConditionPathExists=/run/ostree-booted
 
 [Timer]
-OnBootSec=0
+OnBootSec=3 0
 # This time is relatively arbitrary and obviously expected to be overridden/changed
 OnUnitInactiveSec=6h
 # When deploying a large number of systems, it may be beneficial to increase this value to help with load on the registry.
