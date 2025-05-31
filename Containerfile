@@ -6,10 +6,10 @@ ARG buildid="unset"
 ARG gputype="generic"
 
 # Set labels
-LABEL org.opencontainers.image.build-id="$buildid"
+LABEL org.opencontainers.image.version="$buildid"
 LABEL org.opencontainers.image.authors="Dirk Gottschalk"
 LABEL org.opencontainers.image.name="MediaJunkie"
-LABEL org.opencontainers.image.desciptionr="A bootc based media player image"
+LABEL org.opencontainers.image.desciption="A bootc based media player image"
 
 # Copy the prepared stuff we need into the image
 COPY etc /etc
@@ -21,9 +21,8 @@ COPY etc /etc
 #               --build-arg gputype=intel      (for Intel)
 RUN <<END_OF_BLOCK
 set -eu
-
-mkdir -p /usr/bootc-image
-echo $buildid > /usr/bootc-image/build-id
+echo "IMAGE_ID=$org.opencontainers.image.name" >>/usr/lib/os-release
+echo "IMAGE_VERSION=$org.opencontainers.image.name" >>/usr/lib/os-release
 
 dnf -y install \
 	https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
