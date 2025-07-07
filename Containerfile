@@ -56,6 +56,7 @@ dnf -y --setopt="install_weak_deps=False" install \
 	mc \
 	libdvdcss \
 	usbutils \
+	initial-setup \
 	zram-generator \
 	zram-generator-defaults
 
@@ -89,6 +90,7 @@ systemctl enable \
 	bootc-fetch-apply-updates.timer \
 	redboot-auto-reboot \
 	redboot-task-runner \
+	initial-setup \
 	systemd-zram-setup@zram0.service
 
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
