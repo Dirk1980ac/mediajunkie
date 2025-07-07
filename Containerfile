@@ -37,7 +37,7 @@ dnf -y install \
 	rpmfusion-nonfree-release-tainted
 
 dnf -y --setopt="install_weak_deps=False" install \
-	lightdm \
+	gdm \
 	firewalld \
 	freeipa-client \
 	glibc-langpack-de \
@@ -56,7 +56,7 @@ dnf -y --setopt="install_weak_deps=False" install \
 	mc \
 	libdvdcss \
 	usbutils \
-	initial-setup-gui-wayland-generic \
+	initial-setup \
 	zram-generator \
 	zram-generator-defaults
 
