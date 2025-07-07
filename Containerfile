@@ -56,7 +56,7 @@ dnf -y --setopt="install_weak_deps=False" install \
 	mc \
 	libdvdcss \
 	usbutils \
-	initial-setup \
+	initial-setup-gui-wayland-generic \
 	zram-generator \
 	zram-generator-defaults
 
