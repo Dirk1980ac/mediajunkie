@@ -15,7 +15,9 @@ LABEL org.opencontainers.image.name=${imagename}
 LABEL org.opencontainers.image.desciption="A bootc based media player image"
 
 # Copy the prepared stuff we need into the image
-COPY etc /etc
+COPY configs/watchdog.conf /etc/watchdog.conf
+COPY skel /etc/skel
+COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
 
 # Install the software we want to have.
 #
