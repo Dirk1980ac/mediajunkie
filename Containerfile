@@ -16,8 +16,10 @@ LABEL org.opencontainers.image.desciption="A bootc based media player image"
 
 # Copy the prepared stuff we need into the image
 COPY configs/watchdog.conf /etc/watchdog.conf
+COPY configs/gdm-custom.conf /etc/gdm/custom.conf
 COPY skel /etc/skel
 COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
+COPY systemd /usr/lib/systemd/system
 
 # Install the software we want to have.
 #
@@ -58,7 +60,7 @@ dnf -y --setopt="install_weak_deps=False" install \
 	mc \
 	libdvdcss \
 	usbutils \
-	initial-setup \
+	gnome-initial-setup \
 	zram-generator \
 	zram-generator-defaults
 
@@ -92,8 +94,8 @@ systemctl enable \
 	bootc-fetch-apply-updates.timer \
 	redboot-auto-reboot \
 	redboot-task-runner \
-	initial-setup \
-	systemd-zram-setup@zram0.service
+	systemd-zram-setup@zram0.service \
+	autologin-setup.service
 
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
 

@@ -1,0 +1,10 @@
+[Unit]
+Description=Configure autologin for the first user
+After=multi-user.target gnome-initial-setup.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/setup-autologin.sh
+
+[Install]
+WantedBy=multi-user.target
