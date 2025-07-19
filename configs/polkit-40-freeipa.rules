@@ -1,0 +1,4 @@
+// Domain admins are also machine admins
+polkit.addAdminRule(function(action, subject) {
+    return ["unix-group:admins", "unix-group:wheel"];
+});

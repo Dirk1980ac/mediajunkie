@@ -14,14 +14,6 @@ LABEL org.opencontainers.image.authors="Dirk Gottschalk"
 LABEL org.opencontainers.image.name=${imagename}
 LABEL org.opencontainers.image.desciption="A bootc based media player image"
 
-# Copy the prepared stuff we need into the image
-COPY --chmod=644 configs/watchdog.conf /etc/watchdog.conf
-COPY --chmod=644 configs/gdm-custom.conf /etc/gdm/custom.conf
-COPY skel /etc/skel
-COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
-COPY systemd/autologin-setup.service /usr/lib/systemd/system/autologin-setup.service
-COPY --chmod=744 scripts/setup-autologin.sh /usr/bin/setup-autologin.sh
-
 # Install the software we want to have.
 #
 # NOTE: To create images with (proprietary) GPU drivers you have to add:
@@ -80,10 +72,20 @@ else
 	exit 1
 fi
 
-dnf swap fedora-release-identity-workstation fedora-release-identity-basic
-
 dnf clean all -y
+END_OF_BLOCK
 
+# Copy the prepared stuff we need into the image
+COPY --chmod=644 configs/watchdog.conf /etc/watchdog.conf
+COPY --chmod=644 configs/gdm-custom.conf /etc/gdm/custom.conf
+COPY --chmod=600 configs/sudoers-wheel /etc/sudoers.d/wheel
+COPY skel /etc/skel
+COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
+COPY systemd/autologin-setup.service /usr/lib/systemd/system/autologin-setup.service
+COPY --chmod=744 scripts/setup-autologin.sh /usr/bin/setup-autologin.sh
+COPY  --chmod=644 configs/kodi-wayland.desktop /usr/share/wayland-sessions/kodi-wayland.desktop
+
+RUN <<END_OF_BLOCK
 systemctl enable \
 	cockpit.socket \
 	sshd \
