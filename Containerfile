@@ -15,11 +15,12 @@ LABEL org.opencontainers.image.name=${imagename}
 LABEL org.opencontainers.image.desciption="A bootc based media player image"
 
 # Copy the prepared stuff we need into the image
-COPY configs/watchdog.conf /etc/watchdog.conf
-COPY configs/gdm-custom.conf /etc/gdm/custom.conf
+COPY --chmod=644 configs/watchdog.conf /etc/watchdog.conf
+COPY --chmod=644 configs/gdm-custom.conf /etc/gdm/custom.conf
 COPY skel /etc/skel
 COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
-COPY systemd /usr/lib/systemd/system
+COPY systemd/autologin-setup.service /usr/lib/systemd/system/autologin-setup.service
+COPY --chmod=744 scripts/setup-autologin.sh /usr/bin/setup-autologin.sh
 
 # Install the software we want to have.
 #
@@ -44,12 +45,13 @@ dnf -y --setopt="install_weak_deps=False" install \
 	gdm \
 	firewalld \
 	freeipa-client \
-	glibc-langpack-de \
+	glibc-all-langpacks \
 	kodi \
 	kodi-firewalld \
 	kodi-inputstream-adaptive \
 	kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple \
+	kodi-peripheral-joystick \
 	cockpit \
 	cockpit-storaged \
 	realmd \
@@ -64,7 +66,7 @@ dnf -y --setopt="install_weak_deps=False" install \
 	zram-generator \
 	zram-generator-defaults
 
-dnf -y --repo=rpmfusion-nonfree-tainted install "*-firmware"
+dnf -y --repo=rpmfusion-nonfree-tainted --repo=rpmfusion-free-tainted install "*-firmware"
 
 if [ "$gputype" == "amd" ]; then
 	dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
@@ -77,6 +79,8 @@ else
 	echo "Unknown GPU type: $gputype" >&2
 	exit 1
 fi
+
+dnf swap fedora-release-identity-workstation fedora-release-identity-basic
 
 dnf clean all -y
 
@@ -94,11 +98,11 @@ systemctl enable \
 	bootc-fetch-apply-updates.timer \
 	redboot-auto-reboot \
 	redboot-task-runner \
-	systemd-zram-setup@zram0.service \
-	autologin-setup.service
+	systemd-zram-setup@zram0.service
+# autologin-setup.service
 
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
-
+rm -rf /var/[spool,cache]
 END_OF_BLOCK
 
 RUN bootc container lint
