@@ -34,7 +34,14 @@ dnf -y install \
 	rpmfusion-nonfree-release-tainted
 
 dnf -y --setopt="install_weak_deps=False" install \
-	gdm \
+	lightdm \
+	cockpit \
+	cockpit-storaged \
+	cockpit-networkmanager ¸
+	cockpit-bridge \
+	cockpit-selinux \
+	cockpit-ws \
+	cockpit-ws-selinux \
 	firewalld \
 	freeipa-client \
 	glibc-all-langpacks \
@@ -81,11 +88,13 @@ COPY --chmod=644 configs/gdm-custom.conf /etc/gdm/custom.conf
 COPY --chmod=600 configs/sudoers-wheel /etc/sudoers.d/wheel
 COPY skel /etc/skel
 COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
-COPY systemd/autologin-setup.service /usr/lib/systemd/system/autologin-setup.service
-COPY --chmod=744 scripts/setup-autologin.sh /usr/bin/setup-autologin.sh
-COPY  --chmod=644 configs/kodi-wayland.desktop /usr/share/wayland-sessions/kodi-wayland.desktop
 
 RUN <<END_OF_BLOCK
+# Add default user mjunkie
+useradd -m -c "MediaJunkie" -d /home/mjunkie -s /bin/bash mjunkie
+# with password mjunkie
+echo "mjunkie:mjunkie" | chpasswd
+
 systemctl enable \
 	cockpit.socket \
 	sshd \
@@ -101,7 +110,7 @@ systemctl enable \
 	redboot-auto-reboot \
 	redboot-task-runner \
 	systemd-zram-setup@zram0.service
-# autologin-setup.service
+
 
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
 rm -rf /var/[spool,cache]
