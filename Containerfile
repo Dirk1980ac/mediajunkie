@@ -1,5 +1,5 @@
 # Use the 'latest' tag from fedora-bootc.
-FROM registry.fedoraproject.org/fedora-bootc:42
+FROM registry.fedoraproject.org/fedora-bootc:latest
 
 # Build arguments
 ARG buildid="unset"
@@ -116,12 +116,15 @@ systemctl enable \
 	redboot-auto-reboot \
 	redboot-task-runner \
 	systemd-zram-setup@zram0.service \
+	bootloader-update.service \
 	device-init
 
 # Setup Firewall
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
 
-rm -rf /var/[spool,cache]
+# Clean up.
+find /var/log -type f ! -empty -delete
+rm -rf /var/cache/*
 END_OF_BLOCK
 
 RUN bootc container lint
