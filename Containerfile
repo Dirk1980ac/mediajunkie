@@ -37,7 +37,7 @@ dnf -y --setopt="install_weak_deps=False" install \
 	lightdm \
 	cockpit \
 	cockpit-storaged \
-	cockpit-networkmanager ¸
+	cockpit-networkmanager \
 	cockpit-bridge \
 	cockpit-selinux \
 	cockpit-ws \
@@ -51,50 +51,56 @@ dnf -y --setopt="install_weak_deps=False" install \
 	kodi-inputstream-rtmp \
 	kodi-pvr-iptvsimple \
 	kodi-peripheral-joystick \
+	libaacs \
 	cockpit \
 	cockpit-storaged \
 	realmd \
 	watchdog \
 	greenboot \
 	greenboot-default-health-checks \
-	fedora-remix-logos \
 	mc \
 	libdvdcss \
+	libbluray \
 	usbutils \
-	gnome-initial-setup \
 	zram-generator \
 	zram-generator-defaults
 
 dnf -y --repo=rpmfusion-nonfree-tainted --repo=rpmfusion-free-tainted install "*-firmware"
 
-if [ "$gputype" == "amd" ]; then
-	dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
-	dnf -y swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
-elif [ "$gputype" == "intel" ]; then
-	dnf -y install intel-media-driver
-elif [ "$gputype" == "generic" ]; then
-	: # No GPU specific drivers needed.
-else
-	echo "Unknown GPU type: $gputype" >&2
-	exit 1
+if [ "$gputype" != "generic" ]; then
+	if [ "$gputype" == "amd" ]; then
+		dnf -y swap mesa-va-drivers mesa-va-drivers-freeworld
+		dnf -y swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
+	elif [ "$gputype" == "intel" ]; then
+		dnf -y install intel-media-driver
+	else
+		echo "Unknown GPU type: $gputype" >&2
+		exit 1
+	fi
 fi
-
 dnf clean all -y
 END_OF_BLOCK
 
 # Copy the prepared stuff we need into the image
 COPY --chmod=644 configs/watchdog.conf /etc/watchdog.conf
-COPY --chmod=644 configs/gdm-custom.conf /etc/gdm/custom.conf
 COPY --chmod=600 configs/sudoers-wheel /etc/sudoers.d/wheel
-COPY skel /etc/skel
+COPY --chmod=644 configs/lightdm.conf /etc/lightdm/lightdm.conf
+COPY --chmod=700 scripts/device-init.sh /usr/bin/device-init.sh
+COPY systemd/device-init.service /usr/lib/systemd/system/device-init.service
 COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
+COPY skel /etc/skel
+
+# Pull BluRay keydb.
+RUN <<END_OF_BLOCK
+set -eu
+mkdir -p /etc/skel/.config/aacs
+curl -k https://vlc-bluray.whoknowsmy.name/files/KEYDB.cfg -o /etc/skel/.config/aacs/KEYDB.cfg
+END_OF_BLOCK
 
 RUN <<END_OF_BLOCK
-# Add default user mjunkie
-useradd -m -c "MediaJunkie" -d /home/mjunkie -s /bin/bash mjunkie
-# with password mjunkie
-echo "mjunkie:mjunkie" | chpasswd
+set -eu
 
+# Enable services
 systemctl enable \
 	cockpit.socket \
 	sshd \
@@ -109,10 +115,12 @@ systemctl enable \
 	bootc-fetch-apply-updates.timer \
 	redboot-auto-reboot \
 	redboot-task-runner \
-	systemd-zram-setup@zram0.service
+	systemd-zram-setup@zram0.service \
+	device-init
 
-
+# Setup Firewall
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
+
 rm -rf /var/[spool,cache]
 END_OF_BLOCK
 
