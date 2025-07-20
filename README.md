@@ -2,8 +2,9 @@
 
 ## Features
 
-* Can be integrated into a FreeIPA environment (Packages installed)
+* A user named mjunkie with password mjunkie is created at forst boot and
+set up for auto-login.
+* Can be integrated into a FreeIPA environment (packages preinstalled)
 * Uses Kodi as media player
 * Running SSHD so files and configurations can be copied using SSH
-* Auto-Login user and session can be configured
-* The Cockpit Web
+* The Cockpit web interface
