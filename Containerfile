@@ -1,18 +1,10 @@
 # Use the 'latest' tag from fedora-bootc.
 FROM registry.fedoraproject.org/fedora-bootc:latest
 
-# Build arguments
-ARG buildid="unset"
 ARG gputype="generic"
 
 #Environment
 ENV imagename="mediajunkie"
-
-# Set labels
-LABEL org.opencontainers.image.version=${buildid}
-LABEL org.opencontainers.image.authors="Dirk Gottschalk"
-LABEL org.opencontainers.image.name=${imagename}
-LABEL org.opencontainers.image.desciption="A bootc based media player image"
 
 # Install the software we want to have.
 #
@@ -89,6 +81,22 @@ COPY --chmod=700 scripts/device-init.sh /usr/bin/device-init.sh
 COPY systemd/device-init.service /usr/lib/systemd/system/device-init.service
 COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
 COPY skel /etc/skel
+
+# Image signature settings
+COPY --chmod=644 configs/registries-sigstore.yaml /etc/containers/registries.d/sigstore.yaml
+COPY --chmod=644 configs/containers-toolbox.conf /etc/containers/toolbox.conf
+COPY --chmod=644 configs/containers-policy.json /etc/containers/policy.json
+COPY --chmod=644 keys/dirk1980.pub /usr/share/containers/dirk1980.pub
+COPY --chmod=644 keys/dirk1980-backup.pub /usr/share/containers/dirk1980-backup.pub
+
+# Build arguments
+ARG buildid="unset"
+
+# Set labels
+LABEL org.opencontainers.image.version=${buildid}
+LABEL org.opencontainers.image.authors="Dirk Gottschalk"
+LABEL org.opencontainers.image.name=${imagename}
+LABEL org.opencontainers.image.desciption="A bootc based media player image"
 
 # Pull BluRay keydb.
 RUN <<END_OF_BLOCK

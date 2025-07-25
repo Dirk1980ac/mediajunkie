@@ -1,0 +1,35 @@
+{
+	"default": [
+		{
+			"type": "insecureAcceptAnything"
+		}
+	],
+	"transports": {
+		"docker": {
+			"docker.io/dirk1980/dev-wks": [
+				{
+					"type": "sigstoreSigned",
+					"keyPaths": [
+						"/usr/share/containers/dirk1980.pub",
+						"/usr/share/containers/dirk1980-backup.pub"
+					],
+					"signedIdentity": {
+						"type": "matchRepoDigestOrExact"
+					}
+				}
+			],
+			"docker.io/dirk1980/dev-toolbox": [
+				{
+					"type": "sigstoreSigned",
+					"keyPaths": [
+						"/usr/share/containers/dirk1980.pub",
+						"/usr/share/containers/dirk1980-backup.pub"
+					],
+					"signedIdentity": {
+						"type": "matchRepoDigestOrExact"
+					}
+				}
+			]
+		}
+	}
+}
