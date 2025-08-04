@@ -1,5 +1,5 @@
 # Use the 'latest' tag from fedora-bootc.
-FROM registry.fedoraproject.org/fedora-bootc:latest
+FROM quay.io/fedora/fedora-bootc:latest
 
 ARG gputype="generic"
 
