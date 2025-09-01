@@ -91,7 +91,7 @@ COPY --chmod=644 keys/dirk1980-backup.pub /usr/share/containers/dirk1980-backup.
 
 # Build arguments
 ARG buildid="unset"
-
+ARG sshkeys=""
 # Set labels
 LABEL org.opencontainers.image.version=${buildid}
 LABEL org.opencontainers.image.authors="Dirk Gottschalk"
@@ -107,6 +107,14 @@ END_OF_BLOCK
 
 RUN <<END_OF_BLOCK
 set -eu
+
+echo "IMAGE_ID=${imagename}" >>/usr/lib/os-release
+echo "IMAGE_VERSION=${buildid}" >>/usr/lib/os-release
+
+if [[ -n "$sshkeys" ]]; then
+	mkdir -p /usr/ssh
+	echo $sshkeys > /usr/ssh/root.pub
+fi
 
 # Enable services
 systemctl enable \
@@ -131,8 +139,7 @@ systemctl enable \
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
 
 # Clean up.
-find /var/log -type f ! -empty -delete
-rm -rf /var/cache/*
+rm -rf /var/{cache,log,tmp,spool}/*
 END_OF_BLOCK
 
 RUN bootc container lint
