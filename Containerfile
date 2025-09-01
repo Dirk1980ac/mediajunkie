@@ -14,9 +14,6 @@ ENV imagename="mediajunkie"
 RUN <<END_OF_BLOCK
 set -eu
 
-echo "IMAGE_ID=$imagename}" >>/usr/lib/os-release
-echo "IMAGE_VERSION=$buildid" >>/usr/lib/os-release
-
 dnf -y install \
 	https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
 	https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
@@ -77,8 +74,8 @@ END_OF_BLOCK
 COPY --chmod=644 configs/watchdog.conf /etc/watchdog.conf
 COPY --chmod=600 configs/sudoers-wheel /etc/sudoers.d/wheel
 COPY --chmod=644 configs/lightdm.conf /etc/lightdm/lightdm.conf
-COPY --chmod=700 scripts/device-init.sh /usr/bin/device-init.sh
-COPY systemd/device-init.service /usr/lib/systemd/system/device-init.service
+COPY --chmod=600 configs/ssh-00-0local.conf /usr/bin/device-init.sh
+COPY --chmod=600 configs/ssh-00-0local.conf /etc/ssh/sshd_config.d/00-0local.conf
 COPY systemd/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
 COPY skel /etc/skel
 
@@ -92,6 +89,7 @@ COPY --chmod=644 keys/dirk1980-backup.pub /usr/share/containers/dirk1980-backup.
 # Build arguments
 ARG buildid="unset"
 ARG sshkeys=""
+
 # Set labels
 LABEL org.opencontainers.image.version=${buildid}
 LABEL org.opencontainers.image.authors="Dirk Gottschalk"
@@ -105,11 +103,27 @@ mkdir -p /etc/skel/.config/aacs
 curl -k https://vlc-bluray.whoknowsmy.name/files/KEYDB.cfg -o /etc/skel/.config/aacs/KEYDB.cfg
 END_OF_BLOCK
 
+# Assume Raspberry PI if building aarch64. At least for now.
+RUN --mount=type=bind,source=./scripts,target=/scripts <<EORUN
+set -eu
+
+if [ "$(arch)" == "aarch64" ]; then
+	dnf install -y bcm2711-firmware uboot-images-armv8
+	cp -P /usr/share/uboot/rpi_arm64/u-boot.bin /boot/efi/rpi-u-boot.bin
+	mkdir -p /usr/lib/bootc-raspi-firmwares
+	cp -a /boot/efi/. /usr/lib/bootc-raspi-firmwares/
+	dnf remove -y bcm2711-firmware uboot-images-armv8
+	mkdir /usr/bin/bootupctl-orig
+	mv /usr/bin/bootupctl /usr/bin/bootupctl-orig/
+	cp /scripts/bootupctl-shim /usr/bin/bootupctl
+fi
+EORUN
+
 RUN <<END_OF_BLOCK
 set -eu
 
-echo "IMAGE_ID=${imagename}" >>/usr/lib/os-release
-echo "IMAGE_VERSION=${buildid}" >>/usr/lib/os-release
+echo "IMAGE_ID=$imagename}" >>/usr/lib/os-release
+echo "IMAGE_VERSION=$buildid" >>/usr/lib/os-release
 
 if [[ -n "$sshkeys" ]]; then
 	mkdir -p /usr/ssh
@@ -132,8 +146,7 @@ systemctl enable \
 	redboot-auto-reboot \
 	redboot-task-runner \
 	systemd-zram-setup@zram0.service \
-	bootloader-update.service \
-	device-init
+	bootloader-update.service
 
 # Setup Firewall
 firewall-offline-cmd --add-service={kodi-http,kodi-jsonrpc,cockpit}
